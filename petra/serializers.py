@@ -22,7 +22,7 @@ class ProductListSerializer(serializers.ModelSerializer):
 class ProductDetailSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
     owner = serializers.SerializerMethodField()
-
+    
     class Meta:
         model = Product
         fields = '__all__'
@@ -32,6 +32,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
     def get_owner(self, obj):
         return "%s" % (obj.owner.username)
+
 
 
 class UserCreateSerializer(serializers.ModelSerializer):

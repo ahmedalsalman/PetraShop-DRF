@@ -2,6 +2,8 @@
 from django.contrib import admin
 from django.urls import path
 from petra import views
+from django.conf import settings
+from django.conf.urls.static import static
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -15,3 +17,5 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name="login"),
     path('create/<int:product_id>', views.Create.as_view(), name="create")
 ]
+
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
