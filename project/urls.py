@@ -18,7 +18,11 @@ from django.urls import path
 from petra import views
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # The conventional url would be `products/`
     path('product-list/', views.ProductList.as_view(), name="product-list"),
+
+    # If you're keeping this, the conventional url would be `products/<int:product_id>/`
     path('product-detail/<int:product_id>',
          views.ProductDetail.as_view(), name="product-detail")
 ]
