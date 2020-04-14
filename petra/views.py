@@ -36,8 +36,8 @@ class ProductDetail(RetrieveAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
 
-class CreateView(CreateAPIView):
-    serializer_class = ProductListSerializer
+# class CreateView(CreateAPIView):
+#     serializer_class = ProductListSerializer
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+#     def perform_create(self, serializer):
+#         serializer.save(author=self.request.user)
