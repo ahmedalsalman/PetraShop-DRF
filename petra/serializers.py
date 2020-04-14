@@ -33,6 +33,10 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     def get_owner(self, obj):
         return "%s" % (obj.owner.username)
 
+class CreateProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['name', 'category','price','image1']
 
 class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)

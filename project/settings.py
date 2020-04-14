@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'petra',
     'rest_framework',
-    'corsheaders',
+    'corsheaders'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -61,6 +61,7 @@ MIDDLEWARE = [
 ]
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
+    "http://localhost:19006"
 ]
 
 ROOT_URLCONF = 'project.urls'
