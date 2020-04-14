@@ -1,8 +1,28 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView, RetrieveAPIView
 from .models import Product
-from .serializers import ProductListSerializer, ProductDetailSerializer
-# Create your views here.
+from .serializers import ProductListSerializer, ProductDetailSerializer, UserCreateSerializer, UserLoginSerializer
+
+# DRF Imports:
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.response import Response
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from rest_framework.views import APIView
+
+
+class Register(CreateAPIView):
+    serializer_class = UserCreateSerializer
+
+
+class Login(APIView):
+    serializer_class = UserLoginSerializer
+
+    def post(self, request):
+        my_data = request.data
+        serializer = UserLoginSerializer(data=my_data)
+        if serializer.is_valid(raise_exception=True):
+            valid_data = serializer.data
+            return Response(valid_data, status=HTTP_200_OK)
+        return Response(serializer.errors, HTTP_400_BAD_REQUEST)
 
 
 class ProductList(ListAPIView):
