@@ -9,6 +9,7 @@ class Category(models.Model):
         return self.name
 
     class Meta:
+        # These should be PLURAL, lowercase, strings - i.e. "categories"
         verbose_name_plural = "Category"
 
 
@@ -21,6 +22,8 @@ class Product(models.Model):
         Category, on_delete=models.CASCADE, null=True, blank=True)
     price = models.DecimalField(
         max_digits=5, decimal_places=2, null=True, blank=True)
+
+    # Images should be ImageFields
     image1 = models.TextField()
     image2 = models.TextField(null=True, blank=True)
     image3 = models.TextField(null=True, blank=True)
@@ -30,4 +33,3 @@ class Product(models.Model):
 
     class Meta:
         verbose_name_plural = "Product"
-
