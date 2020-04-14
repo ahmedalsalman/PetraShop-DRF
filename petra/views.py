@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Product
+from django.contrib.auth.models import User
 from .serializers import ProductListSerializer, ProductDetailSerializer, UserCreateSerializer, UserLoginSerializer
 
 # DRF Imports:
@@ -13,18 +14,6 @@ class Register(CreateAPIView):
     serializer_class = UserCreateSerializer
 
 
-class Login(APIView):
-    serializer_class = UserLoginSerializer
-
-    def post(self, request):
-        my_data = request.data
-        serializer = UserLoginSerializer(data=my_data)
-        if serializer.is_valid(raise_exception=True):
-            valid_data = serializer.data
-            return Response(valid_data, status=HTTP_200_OK)
-        return Response(serializer.errors, HTTP_400_BAD_REQUEST)
-
-
 class ProductList(ListAPIView):
     serializer_class = ProductListSerializer
     queryset = Product.objects.all()
@@ -36,8 +25,8 @@ class ProductDetail(RetrieveAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
 
-# class CreateView(CreateAPIView):
+# class Create(CreateAPIView):
 #     serializer_class = ProductListSerializer
 
 #     def perform_create(self, serializer):
-#         serializer.save(author=self.request.user)
+#         serializer.save(owner=self.request.user, product_id=self.kwargs['product_id'])
