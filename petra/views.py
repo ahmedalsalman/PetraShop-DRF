@@ -34,7 +34,7 @@ class Update(UpdateAPIView):
 
 class Create(CreateAPIView):
     serializer_class = CreateProductSerializer
-    permission_classes = [IsAuthenticated,IsAdminUser]
+    # permission_classes = [IsAuthenticated,IsAdminUser]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

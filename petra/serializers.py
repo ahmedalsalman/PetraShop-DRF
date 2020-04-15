@@ -10,7 +10,7 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ["id", "owner", "name", "category", "price", "image1"]
+        fields = ["id", "owner", "name", "category", "price",'quantity',"image1"]
 
     def get_category(self, obj):
         return "%s" % (obj.category.name)
@@ -36,7 +36,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 class CreateProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ['name', 'category','price','image1']
+        fields = ['name', 'category','price','image1', 'quantity']
 
 class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)

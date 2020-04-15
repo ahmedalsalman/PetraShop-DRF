@@ -21,6 +21,7 @@ class Product(models.Model):
         Category, on_delete=models.CASCADE, null=True, blank=True)
     price = models.DecimalField(
         max_digits=5, decimal_places=2, null=True, blank=True)
+    quantity = models.PositiveIntegerField(default=10)
     image1 = models.ImageField(max_length=150)
     image2 = models.ImageField(max_length=150, null=True, blank=True)
     image3 = models.ImageField(max_length=150, null=True, blank=True)
