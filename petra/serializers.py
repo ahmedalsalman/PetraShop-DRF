@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product
+from .models import Product, Cart
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 
@@ -38,19 +38,38 @@ class CreateProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['name', 'category','price','image1','quantity']
 
-
+class CartSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+    product = ProductListSerializer(many=True, read_only=True)
+    class Meta:
+        model = Cart
+        fields='__all__'
+    def get_user(self, obj):
+        return "%s" % (obj.user.username)
+class CartUpdateSerializer(serializers.ModelSerializer):
+    product = ProductListSerializer(many=True, read_only=True)
+    class Meta:
+        model = Cart
+        fields='product'
+#------------------------------------------------------------------------------------------------
 class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ['username', 'password']
+        fields = ['first_name','last_name','email','username', 'password']
 
     def create(self, validated_data):
+        first_name=validated_data['first_name']
+        last_name=validated_data['last_name']
+        email=validated_data['email']
         username = validated_data['username']
         password = validated_data['password']
         new_user = User(username=username)
         new_user.set_password(password)
+        new_user.first_name=(first_name)
+        new_user.last_name=(last_name)
+        new_user.email=(email)
         new_user.save()
         return validated_data
 

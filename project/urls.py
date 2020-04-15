@@ -16,8 +16,10 @@ urlpatterns = [
     path('login/', TokenObtainPairView.as_view(), name="login"),
 
     path('create/', views.Create.as_view(), name="create"),
-    path('update/<int:product_id>', views.Update.as_view(), name='update'),
-    path('delete/<int:product_id>', views.Delete.as_view(), name='delete'),
+    path('update/<int:product_id>/', views.Update.as_view(), name='update'),
+    path('delete/<int:product_id>/', views.Delete.as_view(), name='delete'),
+    path('cart/<int:cart_id>/', views.CartDetails.as_view(), name='cart-detail'),
+    path('update/<int:cart_id>', views.CartUpdate.as_view(), name='cart-update')
 
 ]
 

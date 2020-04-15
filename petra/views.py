@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product, Cart
 from django.contrib.auth.models import User
-from .serializers import ProductListSerializer, ProductDetailSerializer, UserCreateSerializer, UserLoginSerializer, CreateProductSerializer
+from .serializers import ProductListSerializer, ProductDetailSerializer, UserCreateSerializer, UserLoginSerializer, CreateProductSerializer, CartSerializer, CartUpdateSerializer
 
 # DRF Imports:
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, RetrieveAPIView,DestroyAPIView
@@ -17,7 +17,6 @@ class Register(CreateAPIView):
 class ProductList(ListAPIView):
     serializer_class = ProductListSerializer
     queryset = Product.objects.all()
-
 
 class ProductDetail(RetrieveAPIView):
     serializer_class = ProductDetailSerializer
@@ -44,3 +43,22 @@ class Delete(DestroyAPIView):
     queryset = Product.objects.all()
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
+
+    #-----------------------Cart Views-----------------------------
+
+class CartDetails(RetrieveAPIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = CartSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'cart_id'
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
+
+class CartUpdate(UpdateAPIView):
+    permission_classes = [IsAuthenticated, IsAdminUser]
+    serializer_class = CartUpdateSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'cart_id'
+    def get_queryset(self):
+        return Cart.objects.filter(user=self.request.user)
+    
