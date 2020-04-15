@@ -3,17 +3,23 @@ from .models import Product
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 
+"""
+The difference between the list and detail serializers/views is only the product's description
+So it's probably better (you judge and decide) to merge the detail into the list
+so the list returns everything including the description, and in the frontend you only display
+the description in the detail page.
+"""
 
 class ProductListSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
-    owner = serializers.SerializerMethodField()
+    owner = serializers.SerializerMethodField() # maybe return the whole user object?
 
     class Meta:
         model = Product
         fields = ["id", "owner", "name", "category", "price", "image1", 'quantity']
 
     def get_category(self, obj):
-        return "%s" % (obj.category.name)
+        return "%s" % (obj.category.name) # maybe use f-strings?
 
     def get_owner(self, obj):
         return "%s" % (obj.owner.username)

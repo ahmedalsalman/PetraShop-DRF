@@ -9,7 +9,7 @@ class Category(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = "categories"
+        verbose_name_plural = "categories" # 👏👏👏👏👏👏👏👏👏👏👏😍😍😍😍😍
 
 
 class Product(models.Model):

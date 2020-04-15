@@ -15,9 +15,9 @@ urlpatterns = [
     path('signup/', views.Register.as_view(), name="signup"),
     path('login/', TokenObtainPairView.as_view(), name="login"),
 
-    path('create/', views.Create.as_view(), name="create"),
-    path('update/<int:product_id>', views.Update.as_view(), name='update'),
-    path('delete/<int:product_id>', views.Delete.as_view(), name='delete'),
+    path('create/', views.Create.as_view(), name="create"), # "create/" ...create what? it'd be better to make it more clear
+    path('update/<int:product_id>', views.Update.as_view(), name='update'), # like "products/create/" would be better.
+    path('delete/<int:product_id>', views.Delete.as_view(), name='delete'), # same applies here, also add a trailing "/" to the path.
 
 ]
 
