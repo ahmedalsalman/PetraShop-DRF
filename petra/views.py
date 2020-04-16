@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Product, Cart
 from django.contrib.auth.models import User
 from .serializers import ProductListSerializer, ProductDetailSerializer, UserCreateSerializer, UserLoginSerializer, CreateProductSerializer, CartSerializer, CartUpdateSerializer
-from .permissions import IsBookingOwner
+from .permissions import IsProductOwner
 # DRF Imports:
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, RetrieveAPIView,DestroyAPIView
 from rest_framework.response import Response
