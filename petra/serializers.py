@@ -1,25 +1,9 @@
 from rest_framework import serializers
-from .models import Product, Cart
+from .models import Product, Cart, CartItem
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 
-
-class ProductListSerializer(serializers.ModelSerializer):
-    category = serializers.SerializerMethodField()
-    owner = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Product
-        fields = ["id", "owner", "name", "category", "price", "image1", 'quantity']
-
-    def get_category(self, obj):
-        return "%s" % (obj.category.name)
-
-    def get_owner(self, obj):
-        return "%s" % (obj.owner.username)
-
-
-class ProductDetailSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
     owner = serializers.SerializerMethodField()
     
@@ -38,16 +22,22 @@ class CreateProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['name', 'category','price','image1','quantity']
 
+class CartItemSerializer(serializers.ModelSerializer):
+    product=ProductSerializer()
+    class Meta:
+        model=CartItem
+        fields='__all__'
+        
 class CartSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
-    product = ProductListSerializer(many=True, read_only=True)
+    items = CartItemSerializer(many=True, read_only=True)
     class Meta:
         model = Cart
         fields='__all__'
     def get_user(self, obj):
         return "%s" % (obj.user.username)
 class CartUpdateSerializer(serializers.ModelSerializer):
-    product = ProductListSerializer(many=True, read_only=True)
+    product = ProductSerializer(many=True, read_only=True)
     class Meta:
         model = Cart
         fields='product'

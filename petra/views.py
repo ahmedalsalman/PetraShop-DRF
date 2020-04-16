@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Product, Cart
 from django.contrib.auth.models import User
-from .serializers import ProductListSerializer, ProductDetailSerializer, UserCreateSerializer, UserLoginSerializer, CreateProductSerializer, CartSerializer, CartUpdateSerializer
+from .serializers import  ProductSerializer, UserCreateSerializer, UserLoginSerializer, CreateProductSerializer, CartSerializer, CartUpdateSerializer
 from .permissions import IsProductOwner
 # DRF Imports:
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, RetrieveAPIView,DestroyAPIView
@@ -15,11 +15,11 @@ class Register(CreateAPIView):
 
 
 class ProductList(ListAPIView):
-    serializer_class = ProductListSerializer
+    serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
 class ProductDetail(RetrieveAPIView):
-    serializer_class = ProductDetailSerializer
+    serializer_class = ProductSerializer
     queryset = Product.objects.all()
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
@@ -27,18 +27,18 @@ class ProductDetail(RetrieveAPIView):
 class Update(UpdateAPIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
     queryset = Product.objects.all()
-    serializer_class = CreateProductSerializer
+    serializer_class = ProductSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'product_id'
 
 class Create(CreateAPIView):
-    serializer_class = CreateProductSerializer
+    serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated,IsAdminUser]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 class Delete(DestroyAPIView):
-    serializer_class = ProductDetailSerializer
+    serializer_class = ProductSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     queryset = Product.objects.all()
     lookup_field = 'id'
@@ -47,7 +47,7 @@ class Delete(DestroyAPIView):
 #-----------------------Cart Views-----------------------------
 
 class CartDetails(RetrieveAPIView):
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    # permission_classes = [IsProductOwner, IsAdminUser]
     serializer_class = CartSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'cart_id'

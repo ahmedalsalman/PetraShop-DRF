@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 SIMPLE_JWT = {
-     'ACCESS_TOKEN_LIFETIME': timedelta(hours=24),
+     'ACCESS_TOKEN_LIFETIME': timedelta(hours=72),
 }
 # Application definition
 
